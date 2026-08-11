@@ -1,8 +1,8 @@
 variable "rg-name" {
-    type = map(object({
-      name = string
-      location = string
-      
-    }))
-  
+  type = map(object({
+    name     = string
+    location = string
+
+  }))
+
 }
