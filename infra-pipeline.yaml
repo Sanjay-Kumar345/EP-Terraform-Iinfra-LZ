@@ -2,7 +2,7 @@ trigger:
   - main
 
 pool:
-  name: devops-agentpool
+  name: devops-agent
 
 variables:
   terraformVersion: '1.14.6'
