@@ -1,37 +1,38 @@
 trigger:
- - main
+  - main
 
 pool:
   name: devops-agentpool
 
 variables:
-  terraformVersion: v1.14.6
-  workingDirectory:  $(System.DefaultWorkingDirectory)/terraformVersion
+  terraformVersion: '1.14.6'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
 stages:
- - stage: Terraform_init_validate_plan
-   displayName: To check terraform init validate and Terraform_init_validate_plan
-   jobs:
-    - job: TerraformPlan 
-      displayName: Terraform Plan 
 
-      steps:
+- stage: Terraform_Init_Validate_Plan
+  displayName: Terraform Init Validate Plan
 
-      - checkout: self 
+  jobs:
 
+  - job: TerraformPlan
+    displayName: Terraform Plan
 
-      - task: TerraformInstaller@1
-        displayName: Terraform TerraformInstaller
-        inputs:
-          terraformVersion: $(terraformVersion)
+    steps:
 
-      - task: TerraformINIT@2
-        displayName: terraform init
-        
-        inputs: 
+    - checkout: self
+
+    - task: TerraformInstaller@1
+      displayName: Install Terraform
+      inputs:
+        terraformVersion: $(terraformVersion)
+
+    - task: TerraformTaskV4@4
+      displayName: Terraform Init
+      inputs:
+        provider: azurerm
         command: init
+        workingDirectory: $(workingDirectory)
 
-        workingDirectory: $(workingDirectory)/terraform 
-        
 
 
