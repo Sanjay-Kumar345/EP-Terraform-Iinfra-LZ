@@ -6,7 +6,7 @@ pool:
 
 variables:
   terraformVersion: '1.14.6'
-  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Prod'
 
 stages:
 
@@ -27,12 +27,23 @@ stages:
       inputs:
         terraformVersion: $(terraformVersion)
 
-    - task: TerraformTaskV4@4
+    - task: CmdLine@2
       displayName: Terraform Init
       inputs:
-        provider: azurerm
-        command: init
+        script: |
+          terraform init
         workingDirectory: $(workingDirectory)
 
+    - task: CmdLine@2
+      displayName: Terraform Validate
+      inputs:
+        script: |
+          terraform validate
+        workingDirectory: $(workingDirectory)
 
-
+    - task: CmdLine@2
+      displayName: Terraform Plan
+      inputs:
+        script: |
+          terraform plan
+        workingDirectory: $(workingDirectory)
